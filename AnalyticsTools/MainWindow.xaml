@@ -1,0 +1,38 @@
+﻿<Window x:Class="AnalyticsTools.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnalyticsTools"
+        xmlns:a="http://schemas.awesomium.com/winfx"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="350" 
+        Width="525"
+        Loaded="Window_Loaded"
+        >
+    <Window.Resources>
+        <Style x:Key="List" TargetType="ListBox">
+            <Setter Property="MaxWidth" Value="200"></Setter>
+            <Setter Property="MaxHeight" Value="300"></Setter>
+            <Setter Property="MinWidth" Value="200"></Setter>
+            <Setter Property="MinHeight" Value="100"></Setter>
+        </Style>
+        
+        <Style x:Key="UList" TargetType="ListBox" BasedOn="{StaticResource List}">
+        </Style>
+        <Style x:Key="CList" TargetType="ListBox" BasedOn="{StaticResource List}">
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <ListBox Name="UserList" MouseUp="UserList_MouseUp" SelectionChanged="UserList_SelectionChanged" Style="{StaticResource UList}"></ListBox>
+            <ListBox Name="CompanyList" MouseUp="CompanyList_MouseUp" SelectionChanged="CompanyList_SelectionChanged" Style="{StaticResource CList}"></ListBox>
+            <StackPanel Orientation="Horizontal">
+                <Label>Balance: </Label>
+                <Label Name="Balance"></Label>
+            </StackPanel>
+        </StackPanel>
+        <a:WebControl Name="Browser"></a:WebControl>
+    </Grid>
+</Window>
