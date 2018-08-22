@@ -81,7 +81,7 @@ namespace AnalyticsTools
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message);
+                        MessageBox.Show("YandexDirect => Authorize:\n" + ex.Message + "\n\n" + ex.StackTrace);
                     }
                 }
             };
@@ -116,21 +116,30 @@ namespace AnalyticsTools
         public List<string> GetClientsList(string token)
         {
             List<string> users = new List<string>();
-            using (WebClient cl = new WebClient())
+            var addData = "";
+            try
             {
-                string data = JsonConvert.SerializeObject(new Method()
+                using (WebClient cl = new WebClient())
                 {
-                    method = "GetClientsList",
-                    token = token
-                });
+                    string data = JsonConvert.SerializeObject(new Method()
+                    {
+                        method = "GetClientsList",
+                        token = token
+                    });
 
-                var response = cl.UploadString(API4.SB, "POST", data);
-                JObject j = JObject.Parse(response);
-                var sd = from p in j["data"] select (string)p["Login"];
-                foreach(string s in sd)
-                {
-                    users.Add(s);
+                    var response = cl.UploadString(API4.SB, "POST", data);
+                    addData = response;
+                    JObject j = JObject.Parse(response);
+                    var sd = from p in j["data"] select (string)p["Login"];
+                    foreach (string s in sd)
+                    {
+                        users.Add(s);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("YandexDirect => GetClientsList:\n" + ex.Message + "\n\nresponse: \n" + addData + "\n\n" + ex.StackTrace);
             }
             return users;
         }
